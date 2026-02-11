@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ColorBridge — MX Creative Console Prototype</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #141420;
+    --surface-2: #1c1c2e;
+    --border: #2a2a40;
+    --text: #e8e8f0;
+    --text-muted: #8888a0;
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --success: #22c55e;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    text-align: center;
+    padding: 30px 20px 10px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #818cf8, #6366f1, #4f46e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .logo span {
+    background: linear-gradient(135deg, #f0abfc, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ============ LAYOUT ============ */
+  .main-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 30px 20px 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ============ KEYPAD ============ */
+  .device-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .device-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .keypad-shell {
+    background: #18181f;
+    border-radius: 20px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+    position: relative;
+  }
+  .keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .key-btn {
+    width: 88px;
+    height: 88px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .key-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+    pointer-events: none;
+    border-radius: 12px;
+  }
+  .key-btn:hover {
+    transform: scale(1.04);
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .key-btn:active {
+    transform: scale(0.96);
+  }
+  .key-btn .hex-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    letter-spacing: 0.5px;
+    z-index: 1;
+  }
+  .key-btn .color-name {
+    font-size: 8px;
+    font-family: 'DM Sans', sans-serif;
+    color: rgba(255,255,255,0.7);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    z-index: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .key-btn.active-key {
+    border-color: white !important;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.3), 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .page-nav {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    justify-content: center;
+  }
+  .page-dot {
+    width: 28px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .page-dot.active {
+    background: var(--accent);
+    width: 40px;
+  }
+
+  /* ============ DIALPAD ============ */
+  .dialpad-shell {
+    background: #18181f;
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 220px;
+  }
+
+  .dial-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+  .dial-ring {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: conic-gradient(
+      hsl(0,100%,50%), hsl(60,100%,50%), hsl(120,100%,50%),
+      hsl(180,100%,50%), hsl(240,100%,50%), hsl(300,100%,50%), hsl(360,100%,50%)
+    );
+    position: relative;
+    cursor: grab;
+    box-shadow: 0 0 30px rgba(99,102,241,0.1);
+  }
+  .dial-ring:active { cursor: grabbing; }
+  .dial-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    z-index: 2;
+  }
+  .dial-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .dial-label-text {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+  }
+  .dial-indicator {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .dial-indicator-wrapper {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .sub-controls {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+  }
+  .sub-control {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .sub-control label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+  }
+  .slider-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slider-track input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+  .slider-track input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    cursor: pointer;
+    margin-top: -4px;
+  }
+  #satSlider {
+    background: linear-gradient(to right, hsl(0,0%,50%), hsl(0,100%,50%));
+  }
+  #lightSlider {
+    background: linear-gradient(to right, #000, hsl(0,100%,50%), #fff);
+  }
+  .sub-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ============ SIDE PANELS ============ */
+  .side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 240px;
+  }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .info-card h3 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  /* Color preview */
+  .color-preview {
+    width: 100%;
+    height: 80px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background-color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .color-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 40%);
+    border-radius: 10px;
+  }
+
+  .format-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .format-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: var(--surface-2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .format-row:hover {
+    background: var(--border);
+  }
+  .format-row .fmt-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .format-row .fmt-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  /* Contrast checker */
+  .contrast-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .contrast-colors {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .contrast-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .contrast-swatch:hover { border-color: white; }
+  .contrast-vs {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .contrast-preview-text {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .contrast-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--surface-2);
+  }
+  .contrast-ratio {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .contrast-badges {
+    display: flex;
+    gap: 6px;
+  }
+  .badge {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge.pass { background: rgba(34,197,94,0.15); color: var(--success); }
+  .badge.fail { background: rgba(239,68,68,0.15); color: var(--danger); }
+
+  /* Haptic indicator */
+  .haptic-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    font-size: 11px;
+    transition: all 0.3s;
+  }
+  .haptic-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: all 0.3s;
+  }
+  .haptic-indicator.active .haptic-dot {
+    box-shadow: 0 0 10px currentColor;
+  }
+  .haptic-indicator.success { color: var(--success); }
+  .haptic-indicator.success .haptic-dot { background: var(--success); }
+  .haptic-indicator.danger { color: var(--danger); }
+  .haptic-indicator.danger .haptic-dot { background: var(--danger); }
+
+  /* ============ ACTIONS RING ============ */
+  .actions-ring-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .actions-ring-overlay.visible {
+    display: flex;
+    opacity: 1;
+  }
+  .actions-ring {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+  .ring-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    font-weight: 600;
+    z-index: 2;
+  }
+  .ring-action {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    transition: all 0.25s;
+    z-index: 2;
+  }
+  .ring-action:hover {
+    border-color: var(--accent);
+    background: var(--surface-2);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .ring-action .ring-icon { font-size: 20px; }
+  .ring-action .ring-label {
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .ring-bg-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    z-index: 1;
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 200;
+    white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============ BOTTOM BAR ============ */
+  .bottom-bar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 20px 20px;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .action-btn:hover {
+    background: var(--surface-2);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+  .action-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .action-btn.primary:hover {
+    background: #5558e6;
+  }
+
+  /* ============ SCREEN PICKER ============ */
+  .picker-mode body { cursor: crosshair !important; }
+  .picker-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 300;
+    letter-spacing: 1px;
+    display: none;
+  }
+  .picker-banner.active { display: block; }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes hapticPulse {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.6); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  .haptic-pulse .haptic-dot {
+    animation: hapticPulse 0.4s ease;
+  }
+
+  @keyframes copyFlash {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+    100% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+  }
+  .copy-flash {
+    animation: copyFlash 0.4s ease-out;
+  }
+
+  @keyframes ringIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .ring-animate {
+    animation: ringIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .main-layout { flex-direction: column; align-items: center; }
+    .side-panel { min-width: unset; width: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="picker-banner" id="pickerBanner">🎯 SCREEN PICKER ACTIVE — Click anywhere to capture color · Press ESC to cancel</div>
+
+<div class="header">
+  <div class="logo">Color<span>Bridge</span></div>
+  <div class="subtitle">MX Creative Console Plugin Prototype</div>
+</div>
+
+<div class="main-layout">
+
+  <!-- LEFT: Color Info -->
+  <div class="side-panel">
+    <div class="info-card">
+      <h3>Active Color</h3>
+      <div class="color-preview" id="colorPreview"></div>
+      <div class="format-rows">
+        <div class="format-row" onclick="copyFormat('hex')" title="Click to copy">
+          <span class="fmt-label">HEX</span>
+          <span class="fmt-value" id="fmtHex">#6366F1</span>
+        </div>
+        <div class="format-row" onclick="copyFormat('rgb')" title="Click to copy">
+          <span class="fmt-label">RGB</span>
+          <span class="fmt-value" id="fmtRgb">rgb(99, 102, 241)</span>
+        </div>
+        <div class="format-row" onclick="copyFormat('hsl')" title="Click to copy">
+          <span class="fmt-label">HSL</span>
+          <span class="fmt-value" id="fmtHsl">hsl(239, 84%, 67%)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contrast Checker -->
+    <div class="info-card">
+      <h3>WCAG Contrast Check</h3>
+      <div class="contrast-section">
+        <div class="contrast-colors">
+          <div class="contrast-swatch" id="contrastFg" title="Foreground (active color)"></div>
+          <span class="contrast-vs">on</span>
+          <div class="contrast-swatch" id="contrastBg" style="background:#ffffff" title="Click to toggle background"></div>
+          <div class="contrast-preview-text" id="contrastText">Aa Sample</div>
+        </div>
+        <div class="contrast-result">
+          <span class="contrast-ratio" id="contrastRatio">4.6:1</span>
+          <div class="contrast-badges">
+            <span class="badge" id="badgeAA">AA ✓</span>
+            <span class="badge" id="badgeAAA">AAA ✗</span>
+          </div>
+        </div>
+        <div class="haptic-indicator" id="hapticIndicator">
+          <div class="haptic-dot"></div>
+          <span id="hapticText">MX Master 4 Haptic: Idle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: Keypad -->
+  <div class="device-section">
+    <span class="device-label">MX Creative Keypad</span>
+    <div class="keypad-shell">
+      <div class="keypad-grid" id="keypadGrid"></div>
+      <div class="page-nav">
+        <div class="page-dot active" data-page="0" onclick="switchPage(0)"></div>
+        <div class="page-dot" data-page="1" onclick="switchPage(1)"></div>
+        <div class="page-dot" data-page="2" onclick="switchPage(2)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: Dialpad -->
+  <div class="device-section">
+    <span class="device-label">MX Creative Dialpad</span>
+    <div class="dialpad-shell">
+      <div class="dial-container">
+        <div class="dial-ring" id="dialRing">
+          <div class="dial-indicator-wrapper" id="dialIndicatorWrapper">
+            <div class="dial-indicator"></div>
+          </div>
+          <div class="dial-inner">
+            <div class="dial-value" id="dialValue">239°</div>
+            <div class="dial-label-text" id="dialLabel">Hue</div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-controls">
+        <div class="sub-control">
+          <label>Saturation</label>
+          <div class="slider-track">
+            <input type="range" id="satSlider" min="0" max="100" value="84">
+          </div>
+          <span class="sub-value" id="satValue">84%</span>
+        </div>
+        <div class="sub-control">
+          <label>Lightness</label>
+          <div class="slider-track">
+            <input type="range" id="lightSlider" min="5" max="95" value="67">
+          </div>
+          <span class="sub-value" id="lightValue">67%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: empty space for balance / additional info on larger screens -->
+</div>
+
+<!-- Bottom Action Buttons -->
+<div class="bottom-bar">
+  <button class="action-btn" onclick="togglePicker()">🎯 Screen Picker</button>
+  <button class="action-btn" onclick="generatePalette('complementary')">🎨 Complementary</button>
+  <button class="action-btn" onclick="generatePalette('analogous')">🌈 Analogous</button>
+  <button class="action-btn" onclick="generatePalette('triadic')">🔺 Triadic</button>
+  <button class="action-btn primary" onclick="showActionsRing()">⭕ Actions Ring</button>
+  <button class="action-btn" onclick="toggleBg()">◐ Toggle BG</button>
+</div>
+
+<!-- Actions Ring Overlay -->
+<div class="actions-ring-overlay" id="actionsRingOverlay" onclick="hideActionsRing(event)">
+  <div class="actions-ring ring-animate" id="actionsRing">
+    <div class="ring-bg-circle"></div>
+    <div class="ring-center">Actions<br>Ring</div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ STATE ============
+let state = {
+  hue: 239,
+  sat: 84,
+  light: 67,
+  selectedIndex: 0,
+  page: 0,
+  contrastBg: '#ffffff',
+  pickerMode: false,
+  palette: [],
+};
+
+// Default palette
+const defaultPalette = [
+  { h: 239, s: 84, l: 67, name: 'Indigo' },
+  { h: 199, s: 89, l: 48, name: 'Cyan' },
+  { h: 142, s: 71, l: 45, name: 'Green' },
+  { h: 45, s: 93, l: 58, name: 'Amber' },
+  { h: 0, s: 84, l: 60, name: 'Red' },
+  { h: 280, s: 68, l: 60, name: 'Purple' },
+  { h: 330, s: 80, l: 60, name: 'Pink' },
+  { h: 173, s: 80, l: 40, name: 'Teal' },
+  { h: 24, s: 95, l: 53, name: 'Orange' },
+];
+
+const toolsPage = [
+  { icon: '🎯', label: 'Screen\nPicker', action: () => togglePicker() },
+  { icon: '◐', label: 'Contrast\nCheck', action: () => showToast('Contrast checker active') },
+  { icon: '🎨', label: 'Generate\nPalette', action: () => generatePalette('complementary') },
+  { icon: '🖼️', label: 'From\nImage', action: () => showToast('Import palette from image') },
+  { icon: '🔄', label: 'Format\nConvert', action: () => showToast('Cycling formats: HEX → RGB → HSL') },
+  { icon: '🌗', label: 'Shades', action: () => generateShades() },
+  { icon: '☀️', label: 'Tints', action: () => generateTints() },
+  { icon: '🎲', label: 'Random\nColor', action: () => randomColor() },
+  { icon: '💾', label: 'Save\nPalette', action: () => showToast('Palette saved!') },
+];
+
+state.palette = [...defaultPalette];
+
+// ============ HELPERS ============
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    return Math.round(255 * (l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)));
+  };
+  return { r: f(0), g: f(8), b: f(4) };
+}
+
+function relativeLuminance(hex) {
+  const r = parseInt(hex.slice(1,3), 16) / 255;
+  const g = parseInt(hex.slice(3,5), 16) / 255;
+  const b = parseInt(hex.slice(5,7), 16) / 255;
+  const toLinear = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+}
+
+function contrastRatio(hex1, hex2) {
+  const l1 = relativeLuminance(hex1);
+  const l2 = relativeLuminance(hex2);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function textColorFor(hex) {
+  return relativeLuminance(hex) > 0.4 ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.95)';
+}
+
+// ============ RENDERING ============
+function render() {
+  const hex = hslToHex(state.hue, state.sat, state.light);
+  const rgb = hslToRgb(state.hue, state.sat, state.light);
+
+  // Update preview
+  document.getElementById('colorPreview').style.backgroundColor = hex;
+  document.getElementById('fmtHex').textContent = hex.toUpperCase();
+  document.getElementById('fmtRgb').textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+  document.getElementById('fmtHsl').textContent = `hsl(${Math.round(state.hue)}, ${state.sat}%, ${state.light}%)`;
+
+  // Update dial
+  document.getElementById('dialValue').textContent = `${Math.round(state.hue)}°`;
+  document.getElementById('dialIndicatorWrapper').style.transform = `rotate(${state.hue}deg)`;
+
+  // Update sliders visual
+  const satSlider = document.getElementById('satSlider');
+  const lightSlider = document.getElementById('lightSlider');
+  satSlider.style.background = `linear-gradient(to right, hsl(${state.hue},0%,${state.light}%), hsl(${state.hue},100%,${state.light}%))`;
+  lightSlider.style.background = `linear-gradient(to right, #000, hsl(${state.hue},${state.sat}%,50%), #fff)`;
+
+  // Update palette selected color
+  if (state.page === 0 && state.palette[state.selectedIndex]) {
+    state.palette[state.selectedIndex] = { h: state.hue, s: state.sat, l: state.light, name: state.palette[state.selectedIndex].name };
+  }
+
+  renderKeypad();
+  renderContrast();
+}
+
+function renderKeypad() {
+  const grid = document.getElementById('keypadGrid');
+  grid.innerHTML = '';
+
+  if (state.page === 0) {
+    // Palette page
+    state.palette.forEach((c, i) => {
+      const hex = hslToHex(c.h, c.s, c.l);
+      const btn = document.createElement('div');
+      btn.className = 'key-btn' + (i === state.selectedIndex ? ' active-key' : '');
+      btn.style.backgroundColor = hex;
+      btn.innerHTML = `
+        <span class="hex-label" style="color:${textColorFor(hex)}">${hex.toUpperCase()}</span>
+        <span class="color-name" style="color:${textColorFor(hex)}">${c.name}</span>
+      `;
+      btn.onclick = () => selectColor(i);
+      grid.appendChild(btn);
+    });
+  } else if (state.page === 1) {
+    // Tools page
+    toolsPage.forEach(tool => {
+      const btn = document.createElement('div');
+      btn.className = 'key-btn';
+      btn.style.backgroundColor = '#1c1c2e';
+      btn.innerHTML = `
+        <span style="font-size:24px;">${tool.icon}</span>
+        <span class="color-name" style="color:var(--text-muted);white-space:pre-line;line-height:1.2">${tool.label}</span>
+      `;
+      btn.onclick = tool.action;
+      grid.appendChild(btn);
+    });
+  } else {
+    // Saved palettes page
+    const palettes = ['Brand', 'Material', 'Pastel', 'Earth', 'Neon', 'Ocean', 'Sunset', 'Forest', '+ New'];
+    const colors = ['#6366f1','#f44336','#e8b4f8','#8d6e63','#39ff14','#0077b6','#ff6b35','#2d6a4f','#333344'];
+    palettes.forEach((name, i) => {
+      const btn = document.createElement('div');
+      btn.className = 'key-btn';
+      btn.style.backgroundColor = colors[i];
+      btn.innerHTML = `
+        <span class="hex-label" style="color:${textColorFor(colors[i])};font-family:'DM Sans',sans-serif;font-size:11px">${name}</span>
+      `;
+      btn.onclick = () => showToast(`Loading "${name}" palette`);
+      grid.appendChild(btn);
+    });
+  }
+}
+
+function renderContrast() {
+  const hex = hslToHex(state.hue, state.sat, state.light);
+  const bg = state.contrastBg;
+  const ratio = contrastRatio(hex, bg);
+
+  document.getElementById('contrastFg').style.backgroundColor = hex;
+  document.getElementById('contrastBg').style.backgroundColor = bg;
+
+  const textPreview = document.getElementById('contrastText');
+  textPreview.style.backgroundColor = bg;
+  textPreview.style.color = hex;
+  textPreview.style.borderColor = bg === '#ffffff' ? '#ddd' : '#444';
+
+  document.getElementById('contrastRatio').textContent = ratio.toFixed(1) + ':1';
+
+  const aa = ratio >= 4.5;
+  const aaa = ratio >= 7;
+  const badgeAA = document.getElementById('badgeAA');
+  const badgeAAA = document.getElementById('badgeAAA');
+  badgeAA.className = 'badge ' + (aa ? 'pass' : 'fail');
+  badgeAA.textContent = aa ? 'AA ✓' : 'AA ✗';
+  badgeAAA.className = 'badge ' + (aaa ? 'pass' : 'fail');
+  badgeAAA.textContent = aaa ? 'AAA ✓' : 'AAA ✗';
+
+  // Haptic feedback simulation
+  const haptic = document.getElementById('hapticIndicator');
+  const hapticText = document.getElementById('hapticText');
+  haptic.classList.remove('success', 'danger');
+
+  if (aa) {
+    haptic.classList.add('success');
+    hapticText.textContent = 'Haptic: Gentle pulse ✓ Pass';
+  } else {
+    haptic.classList.add('danger');
+    hapticText.textContent = 'Haptic: Strong buzz ✗ Fail';
+  }
+}
+
+// ============ INTERACTIONS ============
+function selectColor(index) {
+  state.selectedIndex = index;
+  const c = state.palette[index];
+  state.hue = c.h;
+  state.sat = c.s;
+  state.light = c.l;
+  document.getElementById('satSlider').value = c.s;
+  document.getElementById('lightSlider').value = c.l;
+
+  // Flash animation
+  const btns = document.querySelectorAll('.key-btn');
+  if (btns[index]) {
+    btns[index].classList.add('copy-flash');
+    setTimeout(() => btns[index].classList.remove('copy-flash'), 400);
+  }
+
+  triggerHaptic();
+  render();
+}
+
+function switchPage(p) {
+  state.page = p;
+  document.querySelectorAll('.page-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === p);
+  });
+  render();
+}
+
+// Dial interaction
+let isDragging = false;
+const dialRing = document.getElementById('dialRing');
+
+function getAngle(e, el) {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const x = (e.clientX || e.touches?.[0]?.clientX) - cx;
+  const y = (e.clientY || e.touches?.[0]?.clientY) - cy;
+  let angle = Math.atan2(y, x) * (180 / Math.PI) + 90;
+  if (angle < 0) angle += 360;
+  return angle;
+}
+
+dialRing.addEventListener('mousedown', (e) => { isDragging = true; updateDial(e); });
+dialRing.addEventListener('touchstart', (e) => { isDragging = true; updateDial(e); }, {passive: true});
+document.addEventListener('mousemove', (e) => { if (isDragging) updateDial(e); });
+document.addEventListener('touchmove', (e) => { if (isDragging) updateDial(e); }, {passive: true});
+document.addEventListener('mouseup', () => isDragging = false);
+document.addEventListener('touchend', () => isDragging = false);
+
+function updateDial(e) {
+  const angle = getAngle(e, dialRing);
+  const oldHue = state.hue;
+  state.hue = angle;
+
+  // Check for primary/secondary hue crossing (haptic detent)
+  const detents = [0, 60, 120, 180, 240, 300];
+  for (const d of detents) {
+    if ((oldHue < d && angle >= d) || (oldHue > d && angle <= d)) {
+      triggerHaptic();
+      break;
+    }
+  }
+  render();
+}
+
+// Sliders
+document.getElementById('satSlider').addEventListener('input', (e) => {
+  state.sat = parseInt(e.target.value);
+  document.getElementById('satValue').textContent = state.sat + '%';
+  render();
+});
+document.getElementById('lightSlider').addEventListener('input', (e) => {
+  state.light = parseInt(e.target.value);
+  document.getElementById('lightValue').textContent = state.light + '%';
+  render();
+});
+
+// Contrast BG toggle
+document.getElementById('contrastBg').addEventListener('click', () => toggleBg());
+function toggleBg() {
+  state.contrastBg = state.contrastBg === '#ffffff' ? '#1a1a2e' : '#ffffff';
+  triggerHaptic();
+  render();
+}
+
+// Copy
+function copyFormat(fmt) {
+  const hex = hslToHex(state.hue, state.sat, state.light);
+  const rgb = hslToRgb(state.hue, state.sat, state.light);
+  let text = '';
+  if (fmt === 'hex') text = hex.toUpperCase();
+  else if (fmt === 'rgb') text = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+  else text = `hsl(${Math.round(state.hue)}, ${state.sat}%, ${state.light}%)`;
+
+  navigator.clipboard?.writeText(text);
+  showToast(`Copied: ${text}`);
+  triggerHaptic();
+}
+
+// Palette generators
+function generatePalette(type) {
+  const h = state.hue;
+  const s = state.sat;
+  const l = state.light;
+  let newPalette = [];
+
+  if (type === 'complementary') {
+    for (let i = 0; i < 9; i++) {
+      const offset = i < 5 ? (i * 10 - 20) : ((i - 4) * 10 - 20);
+      const hue = i < 5 ? (h + offset + 360) % 360 : (h + 180 + offset + 360) % 360;
+      const lightVar = l + (i % 3 - 1) * 8;
+      newPalette.push({ h: hue, s, l: Math.max(15, Math.min(85, lightVar)), name: i < 5 ? 'Primary' : 'Complement' });
+    }
+  } else if (type === 'analogous') {
+    for (let i = 0; i < 9; i++) {
+      const hue = (h + (i - 4) * 15 + 360) % 360;
+      const lightVar = l + (i % 3 - 1) * 6;
+      newPalette.push({ h: hue, s, l: Math.max(15, Math.min(85, lightVar)), name: 'Analogous' });
+    }
+  } else if (type === 'triadic') {
+    for (let i = 0; i < 9; i++) {
+      const group = Math.floor(i / 3);
+      const hue = (h + group * 120 + (i % 3 - 1) * 10 + 360) % 360;
+      const lightVar = l + (i % 3 - 1) * 8;
+      newPalette.push({ h: hue, s, l: Math.max(15, Math.min(85, lightVar)), name: 'Triadic' });
+    }
+  }
+
+  state.palette = newPalette;
+  state.page = 0;
+  state.selectedIndex = 0;
+  switchPage(0);
+  showToast(`Generated ${type} palette`);
+  triggerHaptic();
+}
+
+function generateShades() {
+  const newPalette = [];
+  for (let i = 0; i < 9; i++) {
+    newPalette.push({ h: state.hue, s: state.sat, l: 10 + i * 10, name: `Shade ${i+1}` });
+  }
+  state.palette = newPalette;
+  state.page = 0;
+  switchPage(0);
+  showToast('Generated shade scale');
+}
+
+function generateTints() {
+  const newPalette = [];
+  for (let i = 0; i < 9; i++) {
+    newPalette.push({ h: state.hue, s: Math.max(10, state.sat - i * 6), l: 30 + i * 7, name: `Tint ${i+1}` });
+  }
+  state.palette = newPalette;
+  state.page = 0;
+  switchPage(0);
+  showToast('Generated tint scale');
+}
+
+function randomColor() {
+  state.hue = Math.floor(Math.random() * 360);
+  state.sat = 50 + Math.floor(Math.random() * 50);
+  state.light = 35 + Math.floor(Math.random() * 35);
+  document.getElementById('satSlider').value = state.sat;
+  document.getElementById('lightSlider').value = state.light;
+  document.getElementById('satValue').textContent = state.sat + '%';
+  document.getElementById('lightValue').textContent = state.light + '%';
+  triggerHaptic();
+  render();
+  showToast('Random color picked!');
+}
+
+// Screen picker simulation
+function togglePicker() {
+  state.pickerMode = !state.pickerMode;
+  document.getElementById('pickerBanner').classList.toggle('active', state.pickerMode);
+  document.body.style.cursor = state.pickerMode ? 'crosshair' : '';
+  if (state.pickerMode) {
+    showToast('Click anywhere to "pick" a color (simulated)');
+  }
+}
+
+document.addEventListener('click', (e) => {
+  if (!state.pickerMode) return;
+  if (e.target.closest('.bottom-bar') || e.target.closest('.actions-ring-overlay')) return;
+  state.pickerMode = false;
+  document.getElementById('pickerBanner').classList.remove('active');
+  document.body.style.cursor = '';
+  randomColor();
+  showToast('Color captured from screen!');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (state.pickerMode) {
+      state.pickerMode = false;
+      document.getElementById('pickerBanner').classList.remove('active');
+      document.body.style.cursor = '';
+    }
+    hideActionsRing();
+  }
+});
+
+// Actions Ring
+function showActionsRing() {
+  const overlay = document.getElementById('actionsRingOverlay');
+  overlay.classList.add('visible');
+
+  const ring = document.getElementById('actionsRing');
+  ring.innerHTML = '<div class="ring-bg-circle"></div><div class="ring-center">Actions<br>Ring</div>';
+  ring.classList.add('ring-animate');
+
+  const actions = [
+    { icon: '🎯', label: 'Screen\nPicker', action: () => { hideActionsRing(); togglePicker(); } },
+    { icon: '#', label: 'Paste\nHEX', action: () => { hideActionsRing(); copyFormat('hex'); } },
+    { icon: 'R', label: 'Paste\nRGB', action: () => { hideActionsRing(); copyFormat('rgb'); } },
+    { icon: 'H', label: 'Paste\nHSL', action: () => { hideActionsRing(); copyFormat('hsl'); } },
+    { icon: '◐', label: 'Check\nContrast', action: () => { hideActionsRing(); showToast('Contrast check active'); } },
+    { icon: '🎨', label: 'Generate\nPalette', action: () => { hideActionsRing(); generatePalette('complementary'); } },
+    { icon: '💾', label: 'Save to\nLibrary', action: () => { hideActionsRing(); showToast('Saved to library!'); } },
+    { icon: '🎲', label: 'Random\nColor', action: () => { hideActionsRing(); randomColor(); } },
+  ];
+
+  actions.forEach((a, i) => {
+    const angle = (i * 45 - 90) * (Math.PI / 180);
+    const radius = 120;
+    const x = 160 + radius * Math.cos(angle) - 35;
+    const y = 160 + radius * Math.sin(angle) - 35;
+
+    const el = document.createElement('div');
+    el.className = 'ring-action';
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.animationDelay = (i * 0.04) + 's';
+    el.innerHTML = `<span class="ring-icon">${a.icon}</span><span class="ring-label">${a.label}</span>`;
+    el.onclick = (e) => { e.stopPropagation(); a.action(); };
+    ring.appendChild(el);
+  });
+}
+
+function hideActionsRing(e) {
+  if (e && e.target.closest('.ring-action')) return;
+  document.getElementById('actionsRingOverlay').classList.remove('visible');
+}
+
+// Haptic simulation
+function triggerHaptic() {
+  const h = document.getElementById('hapticIndicator');
+  h.classList.add('haptic-pulse');
+  setTimeout(() => h.classList.remove('haptic-pulse'), 500);
+}
+
+// Toast
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ============ INIT ============
+render();
+</script>
+</body>
+</html>
