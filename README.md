@@ -1,13 +1,13 @@
 # ColorBridge
 **Turn your MX Creative Console into a Color Studio**
 
-## 🎨 Overview
+## Overview
 ColorBridge is a Logi Actions SDK plugin concept that transforms the MX Creative Console into a complete color management workstation for designers and developers.
 
-## 🚀 Live Prototype
+## Live Prototype
 [View Interactive Prototype](prototype.html)
 
-## ❓ The Problem
+## The Problem
 Designers and developers are constantly switching between different tools just to work with colors:
 - Browser extensions for picking colors from screen
 - Separate websites to check accessibility standards
@@ -16,7 +16,7 @@ Designers and developers are constantly switching between different tools just t
 
 It's messy, inefficient, and breaks your workflow.
 
-## ✨ The Solution
+## The Solution
 ColorBridge unifies the entire color workflow into one hardware device:
 
 - **9 LCD Buttons** - Display live color swatches with HEX codes. Press to copy.
@@ -27,7 +27,7 @@ ColorBridge unifies the entire color workflow into one hardware device:
 
 **Works everywhere:** Figma, Photoshop, VS Code, browsers—no app-specific plugins needed.
 
-## 🎯 Key Features
+## Key Features
 
 ### Hardware Integration
 - Physical color wheel interaction via dial
@@ -43,7 +43,7 @@ ColorBridge unifies the entire color workflow into one hardware device:
 - **Dial-as-color-wheel** - Intuitive and unprecedented interaction
 - **No app plugins needed** - Universal workflow
 
-## 🛠️ Technical Approach
+## Technical Approach
 
 Built with **Logi Actions SDK (C#)**:
 - `PluginDynamicCommand` - Button actions and color copying
@@ -54,40 +54,36 @@ Built with **Logi Actions SDK (C#)**:
 - Palette generation algorithms
 - System-wide clipboard integration
 
-## 👥 Target Audience
+## Target Audience
 - UI/UX Designers managing brand colors and design systems
 - Front-end Developers working with CSS and color variables
 - Brand Managers ensuring accessibility compliance
 - Digital Artists requiring precise color control
 - Anyone who works with colors across multiple applications daily
 
-## 📋 Development Roadmap
+## Development Roadmap
 
 If selected for Semi-Finals:
-1. ✅ Develop core color picker and dial integration
-2. ✅ Implement dynamic LCD swatch rendering
-3. ✅ Build haptic feedback system for accessibility
-4. ✅ Create palette generation algorithms
-5. ✅ Test across multiple operating systems and applications
-6. ✅ Refine UX based on real-world testing
+1. Develop core color picker and dial integration
+2. Implement dynamic LCD swatch rendering
+3. Build haptic feedback system for accessibility
+4. Create palette generation algorithms
+5. Test across multiple operating systems and applications
+6. Refine UX based on real-world testing
 
-## 🎥 Demo Video
-[Watch on YouTube](#) *(Coming soon)*
+## Demo Video
+[Watch on YouTube](https://youtu.be/RLZL3CApXHo?si=iAAx_2kYsdYSOnmH) 
 
-## 📄 Documentation
+## Documentation
 See [ColorBridge Documentation.docx](ColorBridge%20Documentation.docx) for detailed concept overview.
 
-## 📸 Screenshots
-*(Screenshots will be added as development progresses)*
+## Developer
 
-## 🏆 Competition
-**Logitech DevStudio Challenge 2026** - Application Phase Submission
+- [@Reyan Arshad](https://www.linkedin.com/in/reyan36/)
 
-## 📝 License
-MIT License - See [LICENSE](LICENSE) file for details
+## License
 
-## 👨‍💻 Developer
-Reyan Arshad
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
