@@ -88,4 +88,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 **Built for the Logitech DevStudio Challenge 2026**
-```
