@@ -1,0 +1,43 @@
+# Build outputs
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+*.lplug4
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# NuGet
+packages/
+*.nupkg
+
+# Logs
+*.log
+
+# Reference projects (not part of this plugin)
+DemoPlugin/
+OBSStudioForLogi-main- Only for help/
+
+# Removed / test projects
+src/ColorBridgeHud/
+src/ReflectTest/
+src/testload/
+src/testload2.cs
+
+# Internal docs (not for public repo)
+COLOR_GUIDELINES.md
+PLAN.md
+
+# Legacy icon templates (purged at build, not needed in repo)
+src/ColorBridgePlugin/src/package/icontemplates/
