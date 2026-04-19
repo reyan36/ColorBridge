@@ -18,6 +18,8 @@ namespace Loupedeck.ColorBridgePlugin
             PluginLog.Init(this.Log);
             PluginResources.Init(this.Assembly);
 
+            PresetStorage.Init(this.GetPluginDataDirectory());
+
             var engine = ColorEngine.Instance;
             PluginLog.Info($"ColorBridge loaded — Hue: {engine.Hue}°, Scheme: {engine.CurrentScheme}");
         }

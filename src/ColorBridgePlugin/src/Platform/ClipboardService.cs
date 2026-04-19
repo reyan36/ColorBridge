@@ -44,16 +44,15 @@ namespace Loupedeck.ColorBridgePlugin.Platform
                 return false;
             }
 
-            var success = false;
             var thread = new Thread(() =>
             {
-                success = CopyToClipboardInternal(text);
+                CopyToClipboardInternal(text);
             });
             thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
             thread.Start();
-            thread.Join(1000);
 
-            return success;
+            return true;
         }
 
         public static String ReadTextFromClipboard()

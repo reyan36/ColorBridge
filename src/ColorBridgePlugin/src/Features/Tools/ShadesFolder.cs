@@ -21,7 +21,6 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
 
             this._engine.PaletteChanged += () => RefreshAllSlots();
             this._engine.FormatChanged += () => RefreshAllSlots();
-            this._engine.ColorChanged += () => RefreshAllSlots();
         }
 
         public override bool Activate()
@@ -51,17 +50,15 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
             if (palette == null || slotIndex >= palette.Length) return;
 
             var (h, s, l) = palette[slotIndex];
-            this._engine.SetColor(h, s, l);
 
-            var colorString = this._engine.GetFormattedColor();
-            if (ClipboardService.CopyToClipboard(colorString))
-            {
-                this._lastCopiedSlot = slotIndex;
-                this._lastCopyAtUtc = DateTime.UtcNow;
-                PluginLog.Info($"Selected + copied {colorString} from shade slot {slotNumber}");
-            }
+            var colorString = this._engine.GetFormattedPaletteColor(slotIndex);
+            ClipboardService.CopyToClipboard(colorString);
+            this._lastCopiedSlot = slotIndex;
+            this._lastCopyAtUtc = DateTime.UtcNow;
+            PluginLog.Info($"Copied {colorString} from shade slot {slotNumber}");
 
-            this.ButtonActionNamesChanged();
+            for (var i = 1; i <= 9; i++)
+                this.CommandImageChanged(i.ToString());
         }
 
         public override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)
