@@ -4,20 +4,23 @@ namespace Loupedeck.ColorBridgePlugin.Features.ActionsRing
     using Loupedeck.ColorBridgePlugin.Engine;
     using Loupedeck.ColorBridgePlugin.Platform;
 
-    public class CopyRgbCommand : PluginDynamicCommand
+    public class SavePresetCommand : PluginDynamicCommand
     {
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
-        public CopyRgbCommand()
-            : base(displayName: "Copy RGB", description: "Copy current color as RGB to clipboard", groupName: "1. Actions Ring")
+        public SavePresetCommand()
+            : base(displayName: "Save Preset", description: "Save current color and scheme as a preset", groupName: "1. Actions Ring")
         {
         }
 
         protected override void RunCommand(String actionParameter)
         {
-            var rgb = ColorConverter.FormatAsRgb(this._engine.Hue, this._engine.Saturation, this._engine.Lightness);
-            ClipboardService.CopyToClipboard(rgb);
-            PluginLog.Info($"Copied RGB: {rgb}");
+            PresetStorage.Save(
+                this._engine.Hue,
+                this._engine.Saturation,
+                this._engine.Lightness,
+                this._engine.CurrentScheme);
+            PluginLog.Info("Saved preset from Actions Ring");
         }
 
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)

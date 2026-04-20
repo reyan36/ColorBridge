@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System.Text;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -11,7 +11,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private bool _savedRecently = false;
 
         public SavePaletteCommand()
-            : base(displayName: "Save Palette", description: "Copy full palette to clipboard", groupName: "Page 1 — Tools")
+            : base(displayName: "Save Palette", description: "Copy full palette to clipboard", groupName: "2. Tools")
         {
         }
 

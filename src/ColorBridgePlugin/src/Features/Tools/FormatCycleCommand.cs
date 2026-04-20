@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using Loupedeck.ColorBridgePlugin.Engine;
     using Loupedeck.ColorBridgePlugin.Platform;
@@ -9,7 +9,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public FormatCycleCommand()
-            : base(displayName: "Format Convert", description: "Press to cycle output format (HEX, RGB, HSL, CMYK)", groupName: "Page 1 — Tools")
+            : base(displayName: "Format Convert", description: "Press to cycle output format (HEX, RGB, HSL, CMYK)", groupName: "2. Tools")
         {
             this._engine.FormatChanged += () => this.ActionImageChanged("");
         }

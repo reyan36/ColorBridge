@@ -4,20 +4,19 @@ namespace Loupedeck.ColorBridgePlugin.Features.ActionsRing
     using Loupedeck.ColorBridgePlugin.Engine;
     using Loupedeck.ColorBridgePlugin.Platform;
 
-    public class CopyRgbCommand : PluginDynamicCommand
+    public class DarkenCommand : PluginDynamicCommand
     {
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
-        public CopyRgbCommand()
-            : base(displayName: "Copy RGB", description: "Copy current color as RGB to clipboard", groupName: "1. Actions Ring")
+        public DarkenCommand()
+            : base(displayName: "Darken", description: "Decrease lightness by 10%", groupName: "1. Actions Ring")
         {
         }
 
         protected override void RunCommand(String actionParameter)
         {
-            var rgb = ColorConverter.FormatAsRgb(this._engine.Hue, this._engine.Saturation, this._engine.Lightness);
-            ClipboardService.CopyToClipboard(rgb);
-            PluginLog.Info($"Copied RGB: {rgb}");
+            this._engine.AdjustLightness(-10);
+            PluginLog.Info($"Darkened to {this._engine.Lightness}%");
         }
 
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)

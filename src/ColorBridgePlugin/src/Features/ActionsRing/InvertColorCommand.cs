@@ -4,20 +4,20 @@ namespace Loupedeck.ColorBridgePlugin.Features.ActionsRing
     using Loupedeck.ColorBridgePlugin.Engine;
     using Loupedeck.ColorBridgePlugin.Platform;
 
-    public class CopyRgbCommand : PluginDynamicCommand
+    public class InvertColorCommand : PluginDynamicCommand
     {
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
-        public CopyRgbCommand()
-            : base(displayName: "Copy RGB", description: "Copy current color as RGB to clipboard", groupName: "1. Actions Ring")
+        public InvertColorCommand()
+            : base(displayName: "Invert Color", description: "Flip to the complementary opposite color", groupName: "1. Actions Ring")
         {
         }
 
         protected override void RunCommand(String actionParameter)
         {
-            var rgb = ColorConverter.FormatAsRgb(this._engine.Hue, this._engine.Saturation, this._engine.Lightness);
-            ClipboardService.CopyToClipboard(rgb);
-            PluginLog.Info($"Copied RGB: {rgb}");
+            var newHue = (this._engine.Hue + 180) % 360;
+            this._engine.SetColor(newHue, this._engine.Saturation, this._engine.Lightness);
+            PluginLog.Info($"Inverted color to hue {newHue}");
         }
 
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)

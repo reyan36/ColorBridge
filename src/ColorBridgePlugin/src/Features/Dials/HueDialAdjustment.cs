@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Dials
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Dials
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -10,7 +10,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Dials
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public HueDialAdjustment()
-            : base(displayName: "Hue Wheel", description: "Rotate to sweep hue, press to reset", groupName: "Page 4 — Dials", hasReset: true)
+            : base(displayName: "Hue Wheel", description: "Rotate to sweep hue, press to reset", groupName: "5. Dials", hasReset: true)
         {
             this._engine.ColorChanged += () =>
             {
@@ -48,7 +48,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Dials
                 // Draw mode text vertically centered in the top half
                 var textH = 30;
                 var fontSize = 16;
-                bmp.DrawText($"HUE {h}°", 0, 15, w, textH, new BitmapColor(255, 255, 255), fontSize);
+                bmp.DrawText($"HUE {h}Â°", 0, 15, w, textH, new BitmapColor(255, 255, 255), fontSize);
 
                 // Draw a dynamic progress bar at the bottom half
                 var barWidth = 70;

@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Dials
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Dials
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -10,7 +10,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Dials
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public SatLightAdjustment()
-            : base(displayName: "Sat / Light", description: "Rotate to adjust, press to toggle between saturation and lightness", groupName: "Page 4 — Dials", hasReset: true)
+            : base(displayName: "Sat / Light", description: "Rotate to adjust, press to toggle between saturation and lightness", groupName: "5. Dials", hasReset: true)
         {
             this._engine.ColorChanged += () =>
             {

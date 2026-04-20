@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         {
             this.DisplayName = "Tints";
             this.Description = "Generate and show tint scale from current color";
-            this.GroupName = "Page 1 — Tools";
+            this.GroupName = "2. Tools";
 
             this._engine.PaletteChanged += () => RefreshAllSlots();
             this._engine.FormatChanged += () => RefreshAllSlots();

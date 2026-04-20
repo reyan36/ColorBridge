@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -9,7 +9,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public ScreenPickerCommand()
-            : base(displayName: "Screen Picker", description: "Pick the color under your cursor and copy it", groupName: "Page 1 — Tools")
+            : base(displayName: "Screen Picker", description: "Pick the color under your cursor and copy it", groupName: "2. Tools")
         {
             this._engine.ColorChanged += () => this.ActionImageChanged("");
         }
@@ -48,11 +48,11 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
             {
                 bmp.Clear(new BitmapColor(10, 10, 15));
 
-                // ↓↓ CHANGE SQUARE POSITION HERE ↓↓
+                // â†“â†“ CHANGE SQUARE POSITION HERE â†“â†“
                 var squareSize = 70;
-                var squareX    = 20;  // ← move left/right
-                var squareY    = 30;  // ← move up/down
-                // ↑↑ CHANGE SQUARE POSITION HERE ↑↑
+                var squareX    = 20;  // â† move left/right
+                var squareY    = 30;  // â† move up/down
+                // â†‘â†‘ CHANGE SQUARE POSITION HERE â†‘â†‘
 
                 bmp.FillRectangle(squareX, squareY, squareSize, squareSize, color);
 

@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -15,7 +15,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private int _lastL = -1;
 
         public RandomColorCommand()
-            : base(displayName: "Random Color", description: "Generate a random base color", groupName: "Page 1 — Tools")
+            : base(displayName: "Random Color", description: "Generate a random base color", groupName: "2. Tools")
         {
             // Only update image when THIS command generates a new color, not on every engine change
         }
@@ -41,12 +41,12 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
             {
                 bmp.Clear(new BitmapColor(10, 10, 15));
 
-                    // ── CHANGE POSITION HERE ──────────────────────────
+                    // â”€â”€ CHANGE POSITION HERE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                     var offsetX =  15;   // negative = move left,  positive = move right
                     var offsetY =  20;  // negative = move up,     positive = move down
                     var cx = w / 2 + offsetX;
                     var cy = w / 2 + offsetY;
-                    // ─────────────────────────────────────────────────
+                    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
                 var orbitRadius = 28;
                 var coreRadius  = 15;
@@ -66,7 +66,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
                 }
                 else
                 {
-                    // No random color generated yet — show placeholder
+                    // No random color generated yet â€” show placeholder
                     bmp.FillCircle(cx, cy, coreRadius, new BitmapColor(60, 60, 70));
                     bmp.DrawText("TAP", offsetX, cy + orbitRadius + 6, w, 16, new BitmapColor(120, 120, 130), 16);
                 }

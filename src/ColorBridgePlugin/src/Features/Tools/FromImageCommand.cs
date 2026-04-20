@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using System.Diagnostics;
@@ -13,7 +13,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public FromImageCommand()
-            : base(displayName: "From Image", description: "Extract palette from clipboard/image path", groupName: "Page 1 — Tools")
+            : base(displayName: "From Image", description: "Extract palette from clipboard/image path", groupName: "2. Tools")
         {
         }
 

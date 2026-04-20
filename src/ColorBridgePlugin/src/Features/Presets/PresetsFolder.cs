@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Presets
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Presets
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Presets
         {
             this.DisplayName = "Palette Presets";
             this.Description = "Built-in and saved palettes. Tap to load, 5x tap to delete saved ones.";
-            this.GroupName = "Page 3 — Presets";
+            this.GroupName = "4. Presets";
         }
 
         public override PluginDynamicFolderNavigation GetNavigationArea(DeviceType _)
@@ -71,7 +71,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Presets
                 return;
             }
 
-            // User preset — check for 5-click delete
+            // User preset â€” check for 5-click delete
             if (actionParameter.StartsWith("user_"))
             {
                 if (int.TryParse(actionParameter.Substring(5), out var userIdx))
@@ -95,7 +95,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Presets
                     }
                     else
                     {
-                        // First click or timeout — load the preset
+                        // First click or timeout â€” load the preset
                         _deleteTargetId = actionParameter;
                         _deleteClickCount = 1;
                         _deleteStartTime = now;
@@ -149,7 +149,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Presets
                 if (_deleteTargetId == actionParameter && _deleteClickCount > 0 && (DateTime.UtcNow - _deleteStartTime).TotalSeconds <= 3.0)
                 {
                     var remaining = 5 - _deleteClickCount;
-                    deleteText = $"×{remaining}";
+                    deleteText = $"X—{remaining}";
                 }
 
                 var useWhite = ColorEngine.ShouldUseWhiteText(p.Hue, p.Sat, p.Light);

@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Palette
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Palette
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Palette
         {
             this.DisplayName = "Palette Slots";
             this.Description = "Dynamic folder showing current 9-slot color palette. Tap to select + copy.";
-            this.GroupName = "Page 2 — Palette";
+            this.GroupName = "3. Palette";
 
             this._engine.PaletteChanged += () => RefreshAllSlots();
             this._engine.FormatChanged += () => RefreshAllSlots();

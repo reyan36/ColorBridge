@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -9,7 +9,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public ContrastBackgroundToggleCommand()
-            : base(displayName: "Contrast Background", description: "Toggle light/dark background", groupName: "Page 1 — Tools")
+            : base(displayName: "Contrast Background", description: "Toggle light/dark background", groupName: "2. Tools")
         {
             this._engine.ContrastBackgroundChanged += () => this.ActionImageChanged("");
         }

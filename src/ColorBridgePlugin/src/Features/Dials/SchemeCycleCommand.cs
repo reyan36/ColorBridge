@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Dials
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Dials
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -10,7 +10,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Dials
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public SchemeAdjustment()
-            : base(displayName: "Palette Scheme", description: "Scroll to change palette scheme, press to reset", groupName: "Page 4 — Dials", hasReset: true)
+            : base(displayName: "Palette Scheme", description: "Scroll to change palette scheme, press to reset", groupName: "5. Dials", hasReset: true)
         {
             this._engine.PaletteChanged += () =>
             {

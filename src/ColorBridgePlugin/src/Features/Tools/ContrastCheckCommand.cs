@@ -1,4 +1,4 @@
-namespace Loupedeck.ColorBridgePlugin.Features.Tools
+﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -8,7 +8,7 @@ namespace Loupedeck.ColorBridgePlugin.Features.Tools
         private readonly ColorEngine _engine = ColorEngine.Instance;
 
         public ContrastCheckCommand()
-            : base(displayName: "Contrast Check", description: "Shows WCAG contrast rating", groupName: "Page 1 — Tools")
+            : base(displayName: "Contrast Check", description: "Shows WCAG contrast rating", groupName: "2. Tools")
         {
             this._engine.ColorChanged += () => this.ActionImageChanged("");
             this._engine.ContrastBackgroundChanged += () => this.ActionImageChanged("");
