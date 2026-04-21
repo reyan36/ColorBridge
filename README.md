@@ -1,113 +1,46 @@
 # ColorBridge
-**Turn your MX Creative Console into a Color Studio**
 
-## Overview
-ColorBridge is a Logi Actions SDK plugin that transforms the MX Creative Console into a complete color management workstation for designers and developers.
+**Turn your MX Creative Console into a Precision Color Studio**
 
-## Demo Video
-[Watch on YouTube](https://youtu.be/RLZL3CApXHo?si=iAAx_2kYsdYSOnmH) 
-
-## The Problem
-Designers and developers are constantly switching between different tools just to work with colors:
-- Browser extensions for picking colors from screen
-- Separate websites to check accessibility standards
-- Online converters for HEX/RGB/HSL formats
-- Different apps to manage color palettes
-
-It's messy, inefficient, and breaks your workflow.
-
-## The Solution
-ColorBridge unifies the entire color workflow into one hardware device:
-
-- **9 LCD Buttons** — Display live color swatches with HEX codes. Press to copy.
-- **Main Dial** — Physical color wheel controlling Hue (0–360°)
-- **Sub-Dial** — Adjust Saturation and Lightness with real-time gradient strips
-- **Actions Ring** — Quick actions: Screen Picker, Format Convert, Contrast Check, Palette Generator
-
-**Works everywhere:** Figma, Photoshop, VS Code, browsers — no app-specific plugins needed.
-
-## Features
-
-### Color Tools
-- **Screen Picker** — Sample any pixel on screen, auto-copy formatted color
-- **Format Convert** — Cycle between HEX, RGB, HSL, CMYK with one press
-- **Contrast Check** — Real-time WCAG AA/AAA compliance checker
-- **Random Color** — Generate random colors with animated feedback
-- **Generate Palette** — Auto-generate palettes (Complementary, Analogous, Triadic, Split, Mono)
-
-### Palette Management
-- **9-Slot Palette** — Visual color swatches, tap to select + copy
-- **Shades & Tints** — Auto-generate shade/tint scales from current color
-- **8 Preset Palettes** — Brand, Material, Pastel, Earth, Neon, Ocean, Sunset, Forest
-- **Save Palette** — Export all 9 colors to clipboard
-- **From Image** — Extract dominant color from any image file
-
-### Dial Controls
-- **Hue Wheel** — Rotate to sweep the full 360° color wheel
-- **Sat / Light** — Dual gradient strips with sliding dot indicators
-- **Palette Scheme** — Scroll to cycle through palette generation algorithms
-
-## Technical Stack
-
-Built with **Logi Actions SDK (C#, .NET 8)**:
-- `BitmapBuilder` — All dynamic UI rendered in code (gradient strips, progress bars, swatches)
-- `PluginDynamicFolder` — Palette slots, shades, tints, and presets as interactive button grids
-- `PluginDynamicAdjustment` — Dial-driven HSL controls and scheme cycling
-- SVG action symbols for Logi Options+ sidebar
-- System-wide clipboard integration
-- WCAG contrast calculation algorithms
-
-## Project Structure
-
-```
-ColorBridge/
-├── src/ColorBridgePlugin/
-│   └── src/
-│       ├── Engine/         # ColorEngine, ColorConverter, PaletteGenerator, WcagChecker
-│       ├── Features/
-│       │   ├── Dials/      # HueDialAdjustment, SatLightAdjustment, SchemeAdjustment
-│       │   ├── Palette/    # PaletteFolder (9-slot swatches)
-│       │   ├── Presets/    # PresetsFolder (8 themes + random)
-│       │   └── Tools/      # All tool commands + Shades/Tints folders
-│       ├── Platform/       # ClipboardService, ScreenColorPicker
-│       └── Rendering/      # SwatchRenderer, IconRenderer, PluginTheme
-├── CONTEXT.md              # AI context / developer handoff document
-├── prototype.html          # Interactive web prototype
-└── README.md
-```
-
-## Building
-
-```powershell
-cd src/ColorBridgePlugin/src
-dotnet build -c Debug
-```
-
-The build automatically:
-- Compiles the plugin DLL
-- Copies package files (SVG symbols, metadata)
-- Creates the plugin link for Logi Plugin Service
-- Sends a reload command
-
-## Target Audience
-- UI/UX Designers managing brand colors and design systems
-- Front-end Developers working with CSS and color variables
-- Brand Managers ensuring accessibility compliance
-- Digital Artists requiring precise color control
-- Anyone who works with colors across multiple applications daily
-
-## Documentation
-- [CONTEXT.md](CONTEXT.md) — Full technical context and architecture docs
-- [ColorBridge Documentation.docx](ColorBridge%20Documentation.docx) — Detailed concept overview
-
-## Developer
-
-- [@Reyan Arshad](https://www.linkedin.com/in/reyan36/)
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+**Download the Plugin**: [ColorBridge_1_0.lplug4](ColorBridge_1_0.lplug4)  
 
 ---
 
-**Built for the Logitech DevStudio Challenge 2026**
+## Overview
+
+ColorBridge is a Logi Actions SDK plugin that transforms the Logitech MX Creative Console into a unified color management workstation. It seamlessly bridges the gap between hardware dial controls and digital color manipulation for designers, brand managers, and developers.
+
+## The Problem
+
+Creative professionals constantly switch contexts between browser extensions, dedicated websites, and disjointed apps just to pick colors, check contrast accessibility, build palettes, and convert color codes. It heavily fragments the creative flowchart and disrupts focus.
+
+## The Solution
+
+ColorBridge completely unifies color administration securely into your physical device. Instantly sample screen pixels, dial in exact Hue/Saturation/Lightness using haptic physical scroll wheels, read live HEX codes right from the LCD button screens, and instantly paste swatches straight into your favorite editor without looking away from your canvas.
+
+---
+
+## Key Features
+
+*   **Physical Dial Integrations**: Rotate dials to smoothly sweep HSL values using live-painted progress bars and custom UI right inside your keypad screens.
+*   **Editor & Figma Tooling**: Push palettes directly into Figma Swatch SVGs, or export precisely formatted Tailwind and Vanilla CSS configuration snippets into VS Code.
+*   **Screen Pixel Picker**: Extract the exact pixel color from any desktop screen with a single keypad tap.
+*   **Auto-Palette Generation**: Instantly spin up perfect Complementary, Analogous, Triadic, Shade, and Tint scale palettes at the hardware level.
+*   **Live WCAG Contrast Checker**: Get immediate AA/AAA pass/fail feedback on your UX accessibility limits directly on your device.
+*   **On-the-Fly Format Conversion**: Quickly cycle and copy the active color to your PC clipboard across HTML HEX, RGB, HSL, and CMYK formats.
+
+---
+
+## How to Install and Use
+
+Installing the ColorBridge plugin takes literally seconds with zero dependencies or manual compiling required.
+
+1.  **Download the Plugin**: Grab the pre-compiled plugin mapping file [`ColorBridge_1_0.lplug4`](ColorBridge_1_0.lplug4) straight from the root of this repository or the [Releases](https://github.com/reyan36/ColorBridge/releases) tab.
+2.  **Install**: Ensure you have Logitech Options+ installed and running. Simply **double-click** the `.lplug4` file.
+3.  **Approve**: Logitech Options+ will pop up to securely confirm installation of the custom plugin signature. Click **Install**.
+4.  **Drag & Drop**: Open Logitech Options+, click into your MX Creative Keypad or Dialpad configuration UI, and find "ColorBridge" listed under the Plugin Actions sidebar. Start dragging the folders and tools directly onto your device keys and dials!
+
+---
+
+**Developer**: [@Reyan Arshad](https://www.linkedin.com/in/reyan36/)  
+*Built for the Logitech DevStudio Challenge 2026*
