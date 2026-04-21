@@ -18,7 +18,7 @@ description: Turn your MX Creative Console into a complete color management work
 pluginFileName: ColorBridgePlugin.dll
 
 # Plugin version.
-version: 1.2
+version: 1.0
 
 # Author of the plugin. The author can be a company or an individual developer.
 author: Reyan Arshad
