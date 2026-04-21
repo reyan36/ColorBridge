@@ -1,4 +1,4 @@
-﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
+namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System.Text;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -38,7 +38,7 @@
             if (this._savedRecently)
                 this._savedRecently = false;
 
-            return IconRenderer.RenderImageOnly("Save Palette.png")
+            return IconRenderer.RenderImageOnly("SavePalette.png")
                    ?? IconRenderer.RenderImageOnly("icon-save.png");
         }
     }

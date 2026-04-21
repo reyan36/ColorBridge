@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ColorBridge — MX Creative Console Prototype</title>
+<title>ColorBridge for MX Creative Console</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
@@ -31,54 +31,197 @@
     overflow-x: hidden;
   }
 
-  /* ============ HEADER ============ */
-  .header {
-    text-align: center;
-    padding: 30px 20px 10px;
-    position: relative;
+  /* ============ LANDING PAGE WRAPPER ============ */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  }
-  .logo {
-    font-size: 28px;
+  .nav-logo {
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #818cf8, #6366f1, #4f46e5);
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff, #a5b4fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    letter-spacing: -1.5px;
   }
-  .logo span {
-    background: linear-gradient(135deg, #f0abfc, #c084fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .subtitle {
-    font-size: 12px;
+  .hero p {
+    font-size: 18px;
     color: var(--text-muted);
-    margin-top: 4px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .btn-primary:hover {
+    background: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 25px var(--accent-glow);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
   }
 
-  /* ============ LAYOUT ============ */
+  /* ============ DEMO WRAPPER ============ */
+  .demo-container {
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    background: #0d0d14;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-header {
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .demo-dots {
+    display: flex;
+    gap: 8px;
+  }
+  .demo-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--border);
+  }
+  .demo-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+  }
+  .feature-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  .feature-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .feature-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ============ PROTOTYPE STYLES ============ */
+  /* Scoped inside .demo-container */
+  
   .main-layout {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     gap: 40px;
-    padding: 30px 20px 20px;
+    padding: 40px;
     flex-wrap: wrap;
+    position: relative;
   }
 
-  /* ============ KEYPAD ============ */
   .device-section {
     display: flex;
     flex-direction: column;
@@ -177,7 +320,6 @@
     width: 40px;
   }
 
-  /* ============ DIALPAD ============ */
   .dialpad-shell {
     background: #18181f;
     border-radius: 20px;
@@ -190,7 +332,6 @@
     gap: 16px;
     width: 220px;
   }
-
   .dial-container {
     position: relative;
     width: 160px;
@@ -211,595 +352,325 @@
   .dial-ring:active { cursor: grabbing; }
   .dial-inner {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 100px; height: 100px;
     border-radius: 50%;
     background: var(--surface);
     border: 2px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; z-index: 2;
   }
-  .dial-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .dial-label-text {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-  }
+  .dial-value { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 600; color: var(--text); }
+  .dial-label-text { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); }
   .dial-indicator {
-    position: absolute;
-    top: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 0 10px rgba(255,255,255,0.8);
-    z-index: 3;
-    pointer-events: none;
+    position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 8px; border-radius: 50%; background: white;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8); z-index: 3; pointer-events: none;
   }
   .dial-indicator-wrapper {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 3;
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 3;
   }
 
-  .sub-controls {
-    display: flex;
-    gap: 12px;
-    width: 100%;
-  }
-  .sub-control {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .sub-control label {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text-muted);
-  }
-  .slider-track {
-    width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    position: relative;
-    overflow: hidden;
-  }
+  .sub-controls { display: flex; gap: 12px; width: 100%; }
+  .sub-control { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sub-control label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); }
+  .slider-track { width: 100%; height: 8px; border-radius: 4px; position: relative; overflow: hidden; }
   .slider-track input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-    z-index: 2;
+    -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 4px; outline: none; cursor: pointer; position: relative; z-index: 2;
   }
   .slider-track input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: white;
-    border: 2px solid var(--border);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    cursor: pointer;
-    margin-top: -4px;
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: white; border: 2px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.4); cursor: pointer; margin-top: -4px;
   }
-  #satSlider {
-    background: linear-gradient(to right, hsl(0,0%,50%), hsl(0,100%,50%));
-  }
-  #lightSlider {
-    background: linear-gradient(to right, #000, hsl(0,100%,50%), #fff);
-  }
-  .sub-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text);
-    font-weight: 500;
-  }
+  #satSlider { background: linear-gradient(to right, hsl(0,0%,50%), hsl(0,100%,50%)); }
+  #lightSlider { background: linear-gradient(to right, #000, hsl(0,100%,50%), #fff); }
+  .sub-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text); font-weight: 500; }
 
-  /* ============ SIDE PANELS ============ */
-  .side-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-width: 240px;
-  }
+  .side-panel { display: flex; flex-direction: column; gap: 16px; min-width: 240px; }
+  .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .info-card h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 12px; }
 
-  .info-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-  }
-  .info-card h3 {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-  }
-
-  /* Color preview */
   .color-preview {
-    width: 100%;
-    height: 80px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: background-color 0.15s;
-    position: relative;
-    overflow: hidden;
+    width: 100%; height: 80px; border-radius: 10px; margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.08); transition: background-color 0.15s; position: relative; overflow: hidden;
   }
   .color-preview::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 40%);
-    border-radius: 10px;
+    content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 40%); border-radius: 10px;
   }
 
-  .format-rows {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
+  .format-rows { display: flex; flex-direction: column; gap: 6px; }
   .format-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 10px;
-    background: var(--surface-2);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
+    display: flex; justify-content: space-between; align-items: center; padding: 6px 10px;
+    background: var(--surface-2); border-radius: 8px; cursor: pointer; transition: all 0.2s;
   }
-  .format-row:hover {
-    background: var(--border);
-  }
-  .format-row .fmt-label {
-    font-size: 10px;
-    color: var(--text-muted);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .format-row .fmt-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text);
-  }
+  .format-row:hover { background: var(--border); }
+  .format-row .fmt-label { font-size: 10px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+  .format-row .fmt-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text); }
 
-  /* Contrast checker */
-  .contrast-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .contrast-colors {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .contrast-swatch {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    border: 2px solid var(--border);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .contrast-section { display: flex; flex-direction: column; gap: 10px; }
+  .contrast-colors { display: flex; gap: 8px; align-items: center; }
+  .contrast-swatch { width: 40px; height: 40px; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; transition: all 0.2s; }
   .contrast-swatch:hover { border-color: white; }
-  .contrast-vs {
-    font-size: 10px;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-  .contrast-preview-text {
-    flex: 1;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-    border: 1px solid var(--border);
-  }
-  .contrast-result {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--surface-2);
-  }
-  .contrast-ratio {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .contrast-badges {
-    display: flex;
-    gap: 6px;
-  }
-  .badge {
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
+  .contrast-vs { font-size: 10px; color: var(--text-muted); font-weight: 600; }
+  .contrast-preview-text { flex: 1; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: center; border: 1px solid var(--border); }
+  .contrast-result { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); }
+  .contrast-ratio { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+  .contrast-badges { display: flex; gap: 6px; }
+  .badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
   .badge.pass { background: rgba(34,197,94,0.15); color: var(--success); }
   .badge.fail { background: rgba(239,68,68,0.15); color: var(--danger); }
 
-  /* Haptic indicator */
   .haptic-indicator {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--surface-2);
-    font-size: 11px;
-    transition: all 0.3s;
+    display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); font-size: 11px; transition: all 0.3s;
   }
-  .haptic-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--text-muted);
-    transition: all 0.3s;
-  }
-  .haptic-indicator.active .haptic-dot {
-    box-shadow: 0 0 10px currentColor;
-  }
+  .haptic-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); transition: all 0.3s; }
+  .haptic-indicator.active .haptic-dot { box-shadow: 0 0 10px currentColor; }
   .haptic-indicator.success { color: var(--success); }
   .haptic-indicator.success .haptic-dot { background: var(--success); }
   .haptic-indicator.danger { color: var(--danger); }
   .haptic-indicator.danger .haptic-dot { background: var(--danger); }
 
-  /* ============ ACTIONS RING ============ */
   .actions-ring-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(8px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.3s;
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 24px;
+    display: none; justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: opacity 0.3s;
   }
-  .actions-ring-overlay.visible {
-    display: flex;
-    opacity: 1;
-  }
-  .actions-ring {
-    position: relative;
-    width: 320px;
-    height: 320px;
-  }
+  .actions-ring-overlay.visible { display: flex; opacity: 1; }
+  .actions-ring { position: relative; width: 320px; height: 320px; }
   .ring-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--accent);
-    font-weight: 600;
-    z-index: 2;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 90px; height: 90px; border-radius: 50%; background: var(--surface);
+    border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; z-index: 2;
   }
   .ring-action {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    cursor: pointer;
-    transition: all 0.25s;
-    z-index: 2;
+    position: absolute; width: 70px; height: 70px; border-radius: 50%; background: var(--surface);
+    border: 1.5px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; cursor: pointer; transition: all 0.25s; z-index: 2;
   }
   .ring-action:hover {
-    border-color: var(--accent);
-    background: var(--surface-2);
-    transform: scale(1.1);
-    box-shadow: 0 0 20px var(--accent-glow);
+    border-color: var(--accent); background: var(--surface-2); transform: scale(1.1); box-shadow: 0 0 20px var(--accent-glow);
   }
   .ring-action .ring-icon { font-size: 20px; }
-  .ring-action .ring-label {
-    font-size: 7px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--text-muted);
-    text-align: center;
-    line-height: 1.2;
-  }
+  .ring-action .ring-label { font-size: 7px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); text-align: center; line-height: 1.2; }
   .ring-bg-circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    z-index: 1;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 260px; height: 260px; border-radius: 50%; border: 1px solid var(--border); z-index: 1;
   }
 
-  /* ============ TOAST ============ */
   .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 200;
-    white-space: nowrap;
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 200; white-space: nowrap;
   }
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ============ BOTTOM BAR ============ */
   .bottom-bar {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    padding: 10px 20px 20px;
-    flex-wrap: wrap;
+    display: flex; justify-content: center; gap: 12px; padding: 10px 20px 30px; flex-wrap: wrap; background: #0d0d14; border-radius: 0 0 24px 24px;
   }
   .action-btn {
-    padding: 8px 18px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    padding: 8px 18px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
   }
-  .action-btn:hover {
-    background: var(--surface-2);
-    border-color: var(--accent);
-    box-shadow: 0 0 15px var(--accent-glow);
-  }
-  .action-btn.primary {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-  .action-btn.primary:hover {
-    background: #5558e6;
-  }
+  .action-btn:hover { background: var(--surface-2); border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+  .action-btn.primary { background: var(--accent); border-color: var(--accent); }
+  .action-btn.primary:hover { background: #5558e6; }
 
-  /* ============ SCREEN PICKER ============ */
-  .picker-mode body { cursor: crosshair !important; }
   .picker-banner {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: linear-gradient(135deg, var(--accent), #7c3aed);
-    padding: 10px;
-    text-align: center;
-    font-size: 12px;
-    font-weight: 600;
-    z-index: 300;
-    letter-spacing: 1px;
-    display: none;
+    position: absolute; top: 0; left: 0; right: 0; background: linear-gradient(135deg, var(--accent), #7c3aed);
+    padding: 10px; text-align: center; font-size: 12px; font-weight: 600; z-index: 300; letter-spacing: 1px; display: none; border-radius: 20px 20px 0 0;
   }
   .picker-banner.active { display: block; }
+  .picker-mode body { cursor: crosshair !important; }
 
-  /* ============ ANIMATIONS ============ */
-  @keyframes hapticPulse {
-    0% { transform: scale(1); }
-    25% { transform: scale(1.6); }
-    50% { transform: scale(1); }
-    75% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-  }
-  .haptic-pulse .haptic-dot {
-    animation: hapticPulse 0.4s ease;
-  }
+  @keyframes hapticPulse { 0% { transform: scale(1); } 25% { transform: scale(1.6); } 50% { transform: scale(1); } 75% { transform: scale(1.3); } 100% { transform: scale(1); } }
+  .haptic-pulse .haptic-dot { animation: hapticPulse 0.4s ease; }
+  @keyframes copyFlash { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); } 100% { box-shadow: 0 0 0 15px rgba(255,255,255,0); } }
+  .copy-flash { animation: copyFlash 0.4s ease-out; }
+  @keyframes ringIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .ring-animate { animation: ringIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 
-  @keyframes copyFlash {
-    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
-    100% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
-  }
-  .copy-flash {
-    animation: copyFlash 0.4s ease-out;
-  }
-
-  @keyframes ringIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .ring-animate {
-    animation: ringIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Responsive */
   @media (max-width: 900px) {
     .main-layout { flex-direction: column; align-items: center; }
     .side-panel { min-width: unset; width: 300px; }
+    .hero h1 { font-size: 40px; }
   }
 </style>
 </head>
 <body>
 
-<div class="picker-banner" id="pickerBanner">🎯 SCREEN PICKER ACTIVE — Click anywhere to capture color · Press ESC to cancel</div>
+<nav>
+  <div class="nav-logo">Color<span>Bridge</span></div>
+  <div class="nav-links">
+    <a href="#" target="_blank">Documentation</a>
+    <a href="#" target="_blank" style="margin-left: 20px;">GitHub</a>
+  </div>
+</nav>
 
-<div class="header">
-  <div class="logo">Color<span>Bridge</span></div>
-  <div class="subtitle">MX Creative Console Plugin Prototype</div>
-</div>
+<header class="hero">
+  <h1>The Ultimate Color Workflow for MX Creative Console</h1>
+  <p>Seamlessly capture, generate, manage, and export color palettes straight from Logitech hardware to your favorite design and development tools.</p>
+  <div class="cta-group">
+    <a href="#" class="btn-primary">Download Plugin</a>
+    <a href="#" class="btn-secondary">View Source Code</a>
+  </div>
+</header>
 
-<div class="main-layout">
+<section class="demo-container">
+  <div class="demo-header">
+    <div class="demo-dots">
+      <div class="demo-dot" style="background:#ef4444"></div>
+      <div class="demo-dot" style="background:#f59e0b"></div>
+      <div class="demo-dot" style="background:#22c55e"></div>
+    </div>
+    <div class="demo-title">Interactive Logi Options+ Preview</div>
+  </div>
+  
+  <!-- EXISTING PROTOTYPE CONTENT WRAPPED HERE -->
+  <div style="position: relative">
+    <div class="picker-banner" id="pickerBanner">🎯 SCREEN PICKER ACTIVE — Click anywhere inside to capture color · Press ESC to cancel</div>
 
-  <!-- LEFT: Color Info -->
-  <div class="side-panel">
-    <div class="info-card">
-      <h3>Active Color</h3>
-      <div class="color-preview" id="colorPreview"></div>
-      <div class="format-rows">
-        <div class="format-row" onclick="copyFormat('hex')" title="Click to copy">
-          <span class="fmt-label">HEX</span>
-          <span class="fmt-value" id="fmtHex">#6366F1</span>
+    <div class="main-layout" id="demoApp">
+      <!-- LEFT: Color Info -->
+      <div class="side-panel">
+        <div class="info-card">
+          <h3>Active Color</h3>
+          <div class="color-preview" id="colorPreview"></div>
+          <div class="format-rows">
+            <div class="format-row" onclick="copyFormat('hex')" title="Click to copy">
+              <span class="fmt-label">HEX</span>
+              <span class="fmt-value" id="fmtHex">#6366F1</span>
+            </div>
+            <div class="format-row" onclick="copyFormat('rgb')" title="Click to copy">
+              <span class="fmt-label">RGB</span>
+              <span class="fmt-value" id="fmtRgb">rgb(99, 102, 241)</span>
+            </div>
+            <div class="format-row" onclick="copyFormat('hsl')" title="Click to copy">
+              <span class="fmt-label">HSL</span>
+              <span class="fmt-value" id="fmtHsl">hsl(239, 84%, 67%)</span>
+            </div>
+          </div>
         </div>
-        <div class="format-row" onclick="copyFormat('rgb')" title="Click to copy">
-          <span class="fmt-label">RGB</span>
-          <span class="fmt-value" id="fmtRgb">rgb(99, 102, 241)</span>
+
+        <!-- Contrast Checker -->
+        <div class="info-card">
+          <h3>WCAG Contrast Check</h3>
+          <div class="contrast-section">
+            <div class="contrast-colors">
+              <div class="contrast-swatch" id="contrastFg" title="Foreground (active color)"></div>
+              <span class="contrast-vs">on</span>
+              <div class="contrast-swatch" id="contrastBg" style="background:#ffffff" title="Click to toggle background"></div>
+              <div class="contrast-preview-text" id="contrastText">Aa Sample</div>
+            </div>
+            <div class="contrast-result">
+              <span class="contrast-ratio" id="contrastRatio">4.6:1</span>
+              <div class="contrast-badges">
+                <span class="badge" id="badgeAA">AA ✓</span>
+                <span class="badge" id="badgeAAA">AAA ✗</span>
+              </div>
+            </div>
+            <div class="haptic-indicator" id="hapticIndicator">
+              <div class="haptic-dot"></div>
+              <span id="hapticText">MX Master 4 Haptic: Idle</span>
+            </div>
+          </div>
         </div>
-        <div class="format-row" onclick="copyFormat('hsl')" title="Click to copy">
-          <span class="fmt-label">HSL</span>
-          <span class="fmt-value" id="fmtHsl">hsl(239, 84%, 67%)</span>
+      </div>
+
+      <!-- CENTER: Keypad -->
+      <div class="device-section">
+        <span class="device-label">MX Creative Keypad</span>
+        <div class="keypad-shell">
+          <div class="keypad-grid" id="keypadGrid"></div>
+          <div class="page-nav">
+            <div class="page-dot active" data-page="0" onclick="switchPage(0)"></div>
+            <div class="page-dot" data-page="1" onclick="switchPage(1)"></div>
+            <div class="page-dot" data-page="2" onclick="switchPage(2)"></div>
+          </div>
         </div>
+      </div>
+
+      <!-- CENTER: Dialpad -->
+      <div class="device-section">
+        <span class="device-label">MX Creative Dialpad</span>
+        <div class="dialpad-shell">
+          <div class="dial-container">
+            <div class="dial-ring" id="dialRing">
+              <div class="dial-indicator-wrapper" id="dialIndicatorWrapper">
+                <div class="dial-indicator"></div>
+              </div>
+              <div class="dial-inner">
+                <div class="dial-value" id="dialValue">239°</div>
+                <div class="dial-label-text" id="dialLabel">Hue</div>
+              </div>
+            </div>
+          </div>
+          <div class="sub-controls">
+            <div class="sub-control">
+              <label>Saturation</label>
+              <div class="slider-track">
+                <input type="range" id="satSlider" min="0" max="100" value="84">
+              </div>
+              <span class="sub-value" id="satValue">84%</span>
+            </div>
+            <div class="sub-control">
+              <label>Lightness</label>
+              <div class="slider-track">
+                <input type="range" id="lightSlider" min="5" max="95" value="67">
+              </div>
+              <span class="sub-value" id="lightValue">67%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /main-layout -->
+
+    <!-- Bottom Action Buttons -->
+    <div class="bottom-bar">
+      <button class="action-btn" onclick="togglePicker()">🎯 Screen Picker</button>
+      <button class="action-btn" onclick="generatePalette('complementary')">🎨 Complementary</button>
+      <button class="action-btn" onclick="generatePalette('analogous')">🌈 Analogous</button>
+      <button class="action-btn" onclick="generatePalette('triadic')">🔺 Triadic</button>
+      <button class="action-btn primary" onclick="showActionsRing()">⭕ Actions Ring</button>
+      <button class="action-btn" onclick="toggleBg()">◐ Toggle BG</button>
+    </div>
+
+    <!-- Actions Ring Overlay -->
+    <div class="actions-ring-overlay" id="actionsRingOverlay" onclick="hideActionsRing(event)">
+      <div class="actions-ring ring-animate" id="actionsRing">
+        <div class="ring-bg-circle"></div>
+        <div class="ring-center">Actions<br>Ring</div>
       </div>
     </div>
 
-    <!-- Contrast Checker -->
-    <div class="info-card">
-      <h3>WCAG Contrast Check</h3>
-      <div class="contrast-section">
-        <div class="contrast-colors">
-          <div class="contrast-swatch" id="contrastFg" title="Foreground (active color)"></div>
-          <span class="contrast-vs">on</span>
-          <div class="contrast-swatch" id="contrastBg" style="background:#ffffff" title="Click to toggle background"></div>
-          <div class="contrast-preview-text" id="contrastText">Aa Sample</div>
-        </div>
-        <div class="contrast-result">
-          <span class="contrast-ratio" id="contrastRatio">4.6:1</span>
-          <div class="contrast-badges">
-            <span class="badge" id="badgeAA">AA ✓</span>
-            <span class="badge" id="badgeAAA">AAA ✗</span>
-          </div>
-        </div>
-        <div class="haptic-indicator" id="hapticIndicator">
-          <div class="haptic-dot"></div>
-          <span id="hapticText">MX Master 4 Haptic: Idle</span>
-        </div>
-      </div>
-    </div>
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+  </div> <!-- /relative wrapper -->
+</section>
+
+<section class="features-grid">
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Engineered for MX Devices</h3>
+    <p>ColorBridge seamlessly integrates with the Logitech MX Creative Console, fully utilizing specific hardware APIs including the haptic dial feedback and touchscreen actions rings to provide an immersive color manipulation experience.</p>
   </div>
-
-  <!-- CENTER: Keypad -->
-  <div class="device-section">
-    <span class="device-label">MX Creative Keypad</span>
-    <div class="keypad-shell">
-      <div class="keypad-grid" id="keypadGrid"></div>
-      <div class="page-nav">
-        <div class="page-dot active" data-page="0" onclick="switchPage(0)"></div>
-        <div class="page-dot" data-page="1" onclick="switchPage(1)"></div>
-        <div class="page-dot" data-page="2" onclick="switchPage(2)"></div>
-      </div>
-    </div>
+  <div class="feature-card">
+    <div class="feature-icon">🎨</div>
+    <h3>Direct Figma Integration</h3>
+    <p>Using the Dynamic Folder plugin API, generate an entire set of color swatches instantly and copy them straight to your clipboard as SVG. Paste flawlessly into Figma canvases globally.</p>
   </div>
-
-  <!-- CENTER: Dialpad -->
-  <div class="device-section">
-    <span class="device-label">MX Creative Dialpad</span>
-    <div class="dialpad-shell">
-      <div class="dial-container">
-        <div class="dial-ring" id="dialRing">
-          <div class="dial-indicator-wrapper" id="dialIndicatorWrapper">
-            <div class="dial-indicator"></div>
-          </div>
-          <div class="dial-inner">
-            <div class="dial-value" id="dialValue">239°</div>
-            <div class="dial-label-text" id="dialLabel">Hue</div>
-          </div>
-        </div>
-      </div>
-      <div class="sub-controls">
-        <div class="sub-control">
-          <label>Saturation</label>
-          <div class="slider-track">
-            <input type="range" id="satSlider" min="0" max="100" value="84">
-          </div>
-          <span class="sub-value" id="satValue">84%</span>
-        </div>
-        <div class="sub-control">
-          <label>Lightness</label>
-          <div class="slider-track">
-            <input type="range" id="lightSlider" min="5" max="95" value="67">
-          </div>
-          <span class="sub-value" id="lightValue">67%</span>
-        </div>
-      </div>
-    </div>
+  <div class="feature-card">
+    <div class="feature-icon">💻</div>
+    <h3>VS Code Code Ready</h3>
+    <p>A specialized folder for exporting palettes perfectly formatted into Tailwind config JSON, vanilla CSS custom properties, and SCSS variables. Eliminates typing repetitive HEX codes across multiple editor windows.</p>
   </div>
+</section>
 
-  <!-- RIGHT: empty space for balance / additional info on larger screens -->
-</div>
-
-<!-- Bottom Action Buttons -->
-<div class="bottom-bar">
-  <button class="action-btn" onclick="togglePicker()">🎯 Screen Picker</button>
-  <button class="action-btn" onclick="generatePalette('complementary')">🎨 Complementary</button>
-  <button class="action-btn" onclick="generatePalette('analogous')">🌈 Analogous</button>
-  <button class="action-btn" onclick="generatePalette('triadic')">🔺 Triadic</button>
-  <button class="action-btn primary" onclick="showActionsRing()">⭕ Actions Ring</button>
-  <button class="action-btn" onclick="toggleBg()">◐ Toggle BG</button>
-</div>
-
-<!-- Actions Ring Overlay -->
-<div class="actions-ring-overlay" id="actionsRingOverlay" onclick="hideActionsRing(event)">
-  <div class="actions-ring ring-animate" id="actionsRing">
-    <div class="ring-bg-circle"></div>
-    <div class="ring-center">Actions<br>Ring</div>
-  </div>
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
+<footer>
+  <p>&copy; 2026 ColorBridge Plugin. Built for Logitech MX Creative Console.</p>
+</footer>
 
 <script>
 // ============ STATE ============
@@ -888,23 +759,19 @@ function render() {
   const hex = hslToHex(state.hue, state.sat, state.light);
   const rgb = hslToRgb(state.hue, state.sat, state.light);
 
-  // Update preview
   document.getElementById('colorPreview').style.backgroundColor = hex;
   document.getElementById('fmtHex').textContent = hex.toUpperCase();
   document.getElementById('fmtRgb').textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   document.getElementById('fmtHsl').textContent = `hsl(${Math.round(state.hue)}, ${state.sat}%, ${state.light}%)`;
 
-  // Update dial
   document.getElementById('dialValue').textContent = `${Math.round(state.hue)}°`;
   document.getElementById('dialIndicatorWrapper').style.transform = `rotate(${state.hue}deg)`;
 
-  // Update sliders visual
   const satSlider = document.getElementById('satSlider');
   const lightSlider = document.getElementById('lightSlider');
   satSlider.style.background = `linear-gradient(to right, hsl(${state.hue},0%,${state.light}%), hsl(${state.hue},100%,${state.light}%))`;
   lightSlider.style.background = `linear-gradient(to right, #000, hsl(${state.hue},${state.sat}%,50%), #fff)`;
 
-  // Update palette selected color
   if (state.page === 0 && state.palette[state.selectedIndex]) {
     state.palette[state.selectedIndex] = { h: state.hue, s: state.sat, l: state.light, name: state.palette[state.selectedIndex].name };
   }
@@ -918,43 +785,32 @@ function renderKeypad() {
   grid.innerHTML = '';
 
   if (state.page === 0) {
-    // Palette page
     state.palette.forEach((c, i) => {
       const hex = hslToHex(c.h, c.s, c.l);
       const btn = document.createElement('div');
       btn.className = 'key-btn' + (i === state.selectedIndex ? ' active-key' : '');
       btn.style.backgroundColor = hex;
-      btn.innerHTML = `
-        <span class="hex-label" style="color:${textColorFor(hex)}">${hex.toUpperCase()}</span>
-        <span class="color-name" style="color:${textColorFor(hex)}">${c.name}</span>
-      `;
+      btn.innerHTML = `<span class="hex-label" style="color:${textColorFor(hex)}">${hex.toUpperCase()}</span><span class="color-name" style="color:${textColorFor(hex)}">${c.name}</span>`;
       btn.onclick = () => selectColor(i);
       grid.appendChild(btn);
     });
   } else if (state.page === 1) {
-    // Tools page
     toolsPage.forEach(tool => {
       const btn = document.createElement('div');
       btn.className = 'key-btn';
       btn.style.backgroundColor = '#1c1c2e';
-      btn.innerHTML = `
-        <span style="font-size:24px;">${tool.icon}</span>
-        <span class="color-name" style="color:var(--text-muted);white-space:pre-line;line-height:1.2">${tool.label}</span>
-      `;
+      btn.innerHTML = `<span style="font-size:24px;">${tool.icon}</span><span class="color-name" style="color:var(--text-muted);white-space:pre-line;line-height:1.2">${tool.label}</span>`;
       btn.onclick = tool.action;
       grid.appendChild(btn);
     });
   } else {
-    // Saved palettes page
     const palettes = ['Brand', 'Material', 'Pastel', 'Earth', 'Neon', 'Ocean', 'Sunset', 'Forest', '+ New'];
     const colors = ['#6366f1','#f44336','#e8b4f8','#8d6e63','#39ff14','#0077b6','#ff6b35','#2d6a4f','#333344'];
     palettes.forEach((name, i) => {
       const btn = document.createElement('div');
       btn.className = 'key-btn';
       btn.style.backgroundColor = colors[i];
-      btn.innerHTML = `
-        <span class="hex-label" style="color:${textColorFor(colors[i])};font-family:'DM Sans',sans-serif;font-size:11px">${name}</span>
-      `;
+      btn.innerHTML = `<span class="hex-label" style="color:${textColorFor(colors[i])};font-family:'DM Sans',sans-serif;font-size:11px">${name}</span>`;
       btn.onclick = () => showToast(`Loading "${name}" palette`);
       grid.appendChild(btn);
     });
@@ -985,7 +841,6 @@ function renderContrast() {
   badgeAAA.className = 'badge ' + (aaa ? 'pass' : 'fail');
   badgeAAA.textContent = aaa ? 'AAA ✓' : 'AAA ✗';
 
-  // Haptic feedback simulation
   const haptic = document.getElementById('hapticIndicator');
   const hapticText = document.getElementById('hapticText');
   haptic.classList.remove('success', 'danger');
@@ -1009,13 +864,11 @@ function selectColor(index) {
   document.getElementById('satSlider').value = c.s;
   document.getElementById('lightSlider').value = c.l;
 
-  // Flash animation
   const btns = document.querySelectorAll('.key-btn');
   if (btns[index]) {
     btns[index].classList.add('copy-flash');
     setTimeout(() => btns[index].classList.remove('copy-flash'), 400);
   }
-
   triggerHaptic();
   render();
 }
@@ -1028,7 +881,6 @@ function switchPage(p) {
   render();
 }
 
-// Dial interaction
 let isDragging = false;
 const dialRing = document.getElementById('dialRing');
 
@@ -1055,7 +907,6 @@ function updateDial(e) {
   const oldHue = state.hue;
   state.hue = angle;
 
-  // Check for primary/secondary hue crossing (haptic detent)
   const detents = [0, 60, 120, 180, 240, 300];
   for (const d of detents) {
     if ((oldHue < d && angle >= d) || (oldHue > d && angle <= d)) {
@@ -1066,7 +917,6 @@ function updateDial(e) {
   render();
 }
 
-// Sliders
 document.getElementById('satSlider').addEventListener('input', (e) => {
   state.sat = parseInt(e.target.value);
   document.getElementById('satValue').textContent = state.sat + '%';
@@ -1078,7 +928,6 @@ document.getElementById('lightSlider').addEventListener('input', (e) => {
   render();
 });
 
-// Contrast BG toggle
 document.getElementById('contrastBg').addEventListener('click', () => toggleBg());
 function toggleBg() {
   state.contrastBg = state.contrastBg === '#ffffff' ? '#1a1a2e' : '#ffffff';
@@ -1086,7 +935,6 @@ function toggleBg() {
   render();
 }
 
-// Copy
 function copyFormat(fmt) {
   const hex = hslToHex(state.hue, state.sat, state.light);
   const rgb = hslToRgb(state.hue, state.sat, state.light);
@@ -1100,7 +948,6 @@ function copyFormat(fmt) {
   triggerHaptic();
 }
 
-// Palette generators
 function generatePalette(type) {
   const h = state.hue;
   const s = state.sat;
@@ -1172,14 +1019,10 @@ function randomColor() {
   showToast('Random color picked!');
 }
 
-// Screen picker simulation
 function togglePicker() {
   state.pickerMode = !state.pickerMode;
   document.getElementById('pickerBanner').classList.toggle('active', state.pickerMode);
-  document.body.style.cursor = state.pickerMode ? 'crosshair' : '';
-  if (state.pickerMode) {
-    showToast('Click anywhere to "pick" a color (simulated)');
-  }
+  if (state.pickerMode) showToast('Click anywhere to "pick" a color (simulated)');
 }
 
 document.addEventListener('click', (e) => {
@@ -1187,7 +1030,6 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('.bottom-bar') || e.target.closest('.actions-ring-overlay')) return;
   state.pickerMode = false;
   document.getElementById('pickerBanner').classList.remove('active');
-  document.body.style.cursor = '';
   randomColor();
   showToast('Color captured from screen!');
 });
@@ -1197,13 +1039,11 @@ document.addEventListener('keydown', (e) => {
     if (state.pickerMode) {
       state.pickerMode = false;
       document.getElementById('pickerBanner').classList.remove('active');
-      document.body.style.cursor = '';
     }
     hideActionsRing();
   }
 });
 
-// Actions Ring
 function showActionsRing() {
   const overlay = document.getElementById('actionsRingOverlay');
   overlay.classList.add('visible');
@@ -1245,14 +1085,12 @@ function hideActionsRing(e) {
   document.getElementById('actionsRingOverlay').classList.remove('visible');
 }
 
-// Haptic simulation
 function triggerHaptic() {
   const h = document.getElementById('hapticIndicator');
   h.classList.add('haptic-pulse');
   setTimeout(() => h.classList.remove('haptic-pulse'), 500);
 }
 
-// Toast
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -1262,7 +1100,6 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// ============ INIT ============
 render();
 </script>
 </body>

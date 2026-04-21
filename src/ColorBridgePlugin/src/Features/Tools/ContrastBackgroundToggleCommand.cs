@@ -1,4 +1,4 @@
-﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
+namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using Loupedeck.ColorBridgePlugin.Engine;
@@ -23,7 +23,7 @@
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)
         {
             var isWhite = this._engine.CurrentContrastBackground == ColorEngine.ContrastBackground.White;
-            var fileName = isWhite ? "Contrast Light.png" : "Contrast Dark.png";
+            var fileName = isWhite ? "ContrastLight.png" : "ContrastDark.png";
             return IconRenderer.RenderImageOnly(fileName);
         }
     }

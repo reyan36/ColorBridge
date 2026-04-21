@@ -1,4 +1,4 @@
-﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
+namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using System;
     using System.Diagnostics;
@@ -129,7 +129,7 @@ if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
 
         protected override BitmapImage GetCommandImage(String actionParameter, PluginImageSize imageSize)
         {
-            return IconRenderer.RenderImageOnly("From Image Icon.png")
+            return IconRenderer.RenderImageOnly("FromImageIcon.png")
                    ?? IconRenderer.RenderImageOnly("icon-image.png");
         }
     }

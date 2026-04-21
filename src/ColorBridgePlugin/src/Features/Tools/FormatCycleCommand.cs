@@ -1,4 +1,4 @@
-﻿namespace Loupedeck.ColorBridgePlugin.Features.Tools
+namespace Loupedeck.ColorBridgePlugin.Features.Tools
 {
     using Loupedeck.ColorBridgePlugin.Engine;
     using Loupedeck.ColorBridgePlugin.Platform;
@@ -24,11 +24,11 @@
         {
             var iconName = this._engine.ActiveFormat switch
             {
-                ColorEngine.ColorFormat.HEX => "Format HEX.png",
-                ColorEngine.ColorFormat.RGB => "Format RGB.png",
-                ColorEngine.ColorFormat.HSL => "Format HSL.png",
-                ColorEngine.ColorFormat.CMYK => "Format CMYK.png",
-                _ => "Format HEX.png"
+                ColorEngine.ColorFormat.HEX => "FormatHEX.png",
+                ColorEngine.ColorFormat.RGB => "FormatRGB.png",
+                ColorEngine.ColorFormat.HSL => "FormatHSL.png",
+                ColorEngine.ColorFormat.CMYK => "FormatCMYK.png",
+                _ => "FormatHEX.png"
             };
 
             return IconRenderer.RenderImageOnly(iconName);
