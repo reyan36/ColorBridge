@@ -54,6 +54,11 @@ namespace Loupedeck.ColorBridgePlugin.Platform
 
                 return (r, g, b);
             }
+            catch (DllNotFoundException ex)
+            {
+                PluginLog.Warning($"Screen picker: native DLL not yet available ({ex.Message}). Retrying later.");
+                return null;
+            }
             catch (Exception ex)
             {
                 PluginLog.Error($"Screen picker error: {ex.Message}");

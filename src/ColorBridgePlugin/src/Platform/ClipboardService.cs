@@ -106,6 +106,11 @@ namespace Loupedeck.ColorBridgePlugin.Platform
 
                 return true;
             }
+            catch (DllNotFoundException ex)
+            {
+                PluginLog.Warning($"Clipboard: native DLL not available ({ex.Message})");
+                return false;
+            }
             catch (Exception ex)
             {
                 PluginLog.Error($"Clipboard error: {ex.Message}");
@@ -144,6 +149,11 @@ namespace Loupedeck.ColorBridgePlugin.Platform
                 GlobalUnlock(hData);
                 CloseClipboard();
                 return text;
+            }
+            catch (DllNotFoundException ex)
+            {
+                PluginLog.Warning($"Clipboard read: native DLL not available ({ex.Message})");
+                return String.Empty;
             }
             catch (Exception ex)
             {

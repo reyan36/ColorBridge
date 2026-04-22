@@ -24,6 +24,7 @@ packages/
 
 # Logs
 *.log
+errors/
 
 # Reference projects (not part of this plugin)
 DemoPlugin/

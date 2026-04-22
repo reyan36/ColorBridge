@@ -1,6 +1,7 @@
 namespace Loupedeck.ColorBridgePlugin.Engine
 {
     using System;
+    using System.Threading;
 
     public class ColorEngine
     {
@@ -41,6 +42,11 @@ namespace Loupedeck.ColorBridgePlugin.Engine
         public event Action FormatChanged;
         public event Action SubDialModeChanged;
         public event Action ContrastBackgroundChanged;
+
+        // Debounce timer to prevent flooding Logi Plugin Service with rapid event cascades
+        private Timer _debounceTimer;
+        private readonly Object _debounceLock = new Object();
+        private const Int32 DebounceMs = 50;
 
         private ColorEngine()
         {
@@ -99,13 +105,13 @@ namespace Loupedeck.ColorBridgePlugin.Engine
             var values = (ColorFormat[])Enum.GetValues(typeof(ColorFormat));
             var idx = Array.IndexOf(values, this._activeFormat);
             this._activeFormat = values[(idx + 1) % values.Length];
-            FormatChanged?.Invoke();
+            OnFormatChanged();
         }
 
         public void SetFormat(ColorFormat format)
         {
             this._activeFormat = format;
-            FormatChanged?.Invoke();
+            OnFormatChanged();
         }
 
         public void ToggleSubDialMode()
@@ -136,35 +142,35 @@ namespace Loupedeck.ColorBridgePlugin.Engine
         {
             this._scheme = PaletteGenerator.NextScheme(this._scheme);
             RegeneratePalette();
-            PaletteChanged?.Invoke();
+            OnPaletteChanged();
         }
 
         public void CycleSchemeReverse()
         {
             this._scheme = PaletteGenerator.PreviousScheme(this._scheme);
             RegeneratePalette();
-            PaletteChanged?.Invoke();
+            OnPaletteChanged();
         }
 
         public void SetScheme(PaletteGenerator.SchemeType scheme)
         {
             this._scheme = scheme;
             RegeneratePalette();
-            PaletteChanged?.Invoke();
+            OnPaletteChanged();
         }
 
         public void GenerateShades()
         {
             this._scheme = PaletteGenerator.SchemeType.Shades;
             RegeneratePalette();
-            PaletteChanged?.Invoke();
+            OnPaletteChanged();
         }
 
         public void GenerateTints()
         {
             this._scheme = PaletteGenerator.SchemeType.Tints;
             RegeneratePalette();
-            PaletteChanged?.Invoke();
+            OnPaletteChanged();
         }
 
         private void RegeneratePalette()
@@ -211,8 +217,35 @@ namespace Loupedeck.ColorBridgePlugin.Engine
         private void OnColorChanged()
         {
             RegeneratePalette();
-            ColorChanged?.Invoke();
-            PaletteChanged?.Invoke();
+            DebouncedNotify(() =>
+            {
+                ColorChanged?.Invoke();
+                PaletteChanged?.Invoke();
+            });
+        }
+
+        private void OnPaletteChanged()
+        {
+            DebouncedNotify(() => PaletteChanged?.Invoke());
+        }
+
+        private void OnFormatChanged()
+        {
+            DebouncedNotify(() => FormatChanged?.Invoke());
+        }
+
+        /// <summary>
+        /// Debounce event notifications to prevent flooding the Logi Plugin Service thread.
+        /// Without this, rapid state changes cause dozens of simultaneous image render requests
+        /// that exceed the 1-second per-call timeout, freezing the entire plugin on startup.
+        /// </summary>
+        private void DebouncedNotify(Action callback)
+        {
+            lock (this._debounceLock)
+            {
+                this._debounceTimer?.Dispose();
+                this._debounceTimer = new Timer(_ => callback(), null, DebounceMs, Timeout.Infinite);
+            }
         }
     }
 }
